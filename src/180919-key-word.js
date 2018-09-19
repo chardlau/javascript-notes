@@ -14,4 +14,4 @@ for (let i = 0; i < a.length; ) {
     i += 5;
 }
 
-
+// debugger interface private protected public with 这几个关键词有点陌生
