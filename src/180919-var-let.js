@@ -11,8 +11,10 @@ function test1 () {
     var a2;
     console.log(a2);
     a2 = 1;
+    // console.log(a3); // let不会有变量名提升
+    // let a3 = 1;
 }
-// test1();
+test1();
 
 /*
  * 2. 作用域
