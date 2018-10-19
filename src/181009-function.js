@@ -134,5 +134,213 @@ func7(5);
 /*
  * 9 函数本身的作用域
  * 函数本身也是一个值，也有自己的作用域。它的作用域与变量一样，就是其声明时所在的作用域，与其运行时所在的作用域无关。
- * 函数体内部声明的函数，作用域绑定函数体内部。
+ * 函数体内部声明的函数，作用域绑定函数体内部。参考与闭包有关的内容。
  */
+var a = 1;
+var func8 = function () {
+    console.log(a);
+};
+function func9() {
+    var a = 2;
+    func8();
+}
+func9(); // 1
+
+// 下方代码func10并无法访问到func11中的t1，因为t1是func11的局部变量
+var func10 = function () {
+    console.log(t1); // ReferenceError: t1 is not defined
+};
+function func11(f) {
+    var t1 = 2;
+    f();
+}
+// func11(func10);
+
+
+/*
+ * 10. 函数参数的省略
+ * 无法省略前面的参数而只保留靠后的参数，要做到类似效果只能显示传入undefined
+ */
+function func12(a, b) {
+    return a;
+}
+console.log('func12(1, 2, 3): ', func12(1, 2, 3));
+console.log('func12(1): ', func12(1));
+console.log('func12(): ', func12());
+console.log('func12.length: ', func12.length);
+// func12(, 2); // SyntaxError: Unexpected token ,
+console.log('func12(undefined, 2): ', func12(undefined, 2));
+
+
+/*
+ * 11. 函数参数的传递方式
+ */
+// 如果参数是原始类型执行值传递（passes by value）：在函数体内修改参数值，不会影响到函数外部。
+var p = 2;
+function func13 (p) {
+    p = 3;
+}
+func13(p);
+console.log('p: ', p);
+// 如果函数参数是复合类型的值（数组、对象、其他函数），传递方式是传址传递（pass by reference）:传入函数的原始值的地址，
+// 因此在函数内部修改参数，将会影响到原始值。
+var obj = { p: 1 };
+function func14(o) {
+    o.p = 2;
+}
+func14(obj);
+console.log('obj.p: ', obj.p); // 2
+// 如果函数内部修改的，不是参数对象的某个属性，而是替换掉整个参数，这时不会影响到原始值。
+var obj = [1, 2, 3];
+function func15(o) {
+    o = [2, 3, 4];
+}
+func15(obj);
+console.log('obj: ', obj);
+
+/*
+ * 12. 同名参数
+ * 如果有同名的参数，则调用时取最后出现的那个值，即使后面的参数外部没有值或被省略，也是以其为准。
+ * 可以用arguments对象访问其他参数的值
+ */
+function func16(a, a) {
+    console.log(a);
+}
+func16(1, 2);   // 2
+func16(1);  // undefined
+
+
+/*
+ * 13. arguments对象
+ * arguments对象包含了函数运行时的所有参数，arguments[0]就是第一个参数，arguments[1]就是第二个参数，以此类推。只能在函数内部使用。
+ */
+var func17 = function (one) {
+    console.log(arguments[0]);
+    console.log(arguments[1]);
+    console.log(arguments[2]);
+};
+func17(1, 2, 3);
+// 正常模式下，arguments对象可以在运行时修改
+var func18 = function(a, b) {
+    arguments[0] = 3;
+    arguments[1] = 2;
+    return a + b;
+};
+console.log('func18(1, 1): ', func18(1, 1)); // 5
+// 严格模式下，arguments对象是一个只读对象，修改它是无效的，但不会报错。
+var func19 = function(a, b) {
+    'use strict';
+    arguments[0] = 3;
+    arguments[1] = 2;
+    return a + b;
+};
+console.log('func19(1, 1): ', func19(1, 1)); // 5
+// 通过arguments对象的length属性，可以判断函数调用时到底带几个参数。
+function func20() {
+    return arguments.length;
+}
+console.log('func20(1, 2, 3): ', func20(1, 2, 3)); // 3
+console.log('func20(1): ', func20(1)); // 1
+console.log('func20(): ', func20()); // 0
+// NOTE: arguments很像数组，但它是一个对象。
+function func21() {
+    console.log('Array.isArray(arguments): ', Array.isArray(arguments));
+    console.log('Array.isArray([]): ', Array.isArray([]));
+}
+func21();
+// callee 属性: 返回它所对应的原函数。这个属性在严格模式里面是禁用的，因此不建议使用。
+var func22 = function () {
+    console.log('arguments.callee === func22: ', arguments.callee === func22);
+};
+func22(); // true
+
+
+/*
+ * 14. 闭包
+ */
+// 在借用返回在函数A内部声明的子函数B的变通方法，让函数A外部可以访问到函数A内部的局部变量。
+function func23() {
+    var n = 999;
+    function func24() {
+        return n;
+    }
+    return func24;
+}
+var result = func23();
+console.log('result(): ', result()); // 999
+// 闭包可以让函数A的变量声明周期交由外部引用控制，例如下方的inc可以控制变量闭包内容start的生命周期。
+function createIncrementor(start) {
+    return function () {
+        return start++;
+    };
+}
+var inc = createIncrementor(1);
+console.log('inc(): ', inc());
+console.log('inc(): ', inc());
+console.log('inc(): ', inc());
+var inc2 = createIncrementor(1);
+console.log('inc2(): ', inc2());
+console.log('inc2(): ', inc2());
+// 闭包可以用于封装对象的私有属性和私有方法
+function Person(name) {
+    var _age;
+    function setAge(n) {
+        _age = n;
+    }
+    function getAge() {
+        return _age;
+    }
+
+    return {
+        name: name,
+        getAge: getAge,
+        setAge: setAge
+    };
+}
+var p1 = Person('张三');
+p1.setAge(25);
+console.log('p1.getAge(): ', p1.getAge()); // 25
+
+/*
+ * 15. 立即调用的函数表达式（IIFE）
+ */
+(function(){ /* code */ }());
+// 或者
+(function(){ /* code */ })();
+// 通常情况下，只对匿名函数使用这种“立即执行的函数表达式”。
+// 它的目的有两个：一是不必为函数命名，避免了污染全局变量；二是 IIFE 内部形成了一个单独的作用域，可以封装一些外部无法读取的私有变量。
+/*
+// 写法一
+var tmp = newData;
+processData(tmp);
+storeData(tmp);
+// 写法二
+(function () {
+    var tmp = newData;
+    processData(tmp);
+    storeData(tmp);
+}());
+*/
+
+
+/*
+ * 16. eval函数：接受一个字符串作为参数，并将这个字符串当作语句执行。
+ */
+// eval没有自己的作用域，都在当前作用域内执行，因此可能会修改当前作用域的变量的值，造成安全问题。
+eval('var a = 1;');
+console.log('a: ', a);
+// 为了防止这种风险，JavaScript 规定，如果使用严格模式，eval内部声明的变量，不会影响到外部作用域。
+(function func25 () {
+    'use strict';
+    eval('var foo = 123');
+    // console.log(foo); // ReferenceError: foo is not defined
+})();
+// 为了保证eval的别名不影响代码优化，JavaScript 的标准规定，凡是使用别名执行eval，eval内部一律是全局作用域。
+var c = 1;
+function func26() {
+    var c = 2;
+    var e = eval;
+    // 按例子的解释这里应该不报错且打印c为1，但是我实际运行时报了下面错误
+    // e('console.log(c)'); // ReferenceError: c is not defined
+}
+func26(); // 1
