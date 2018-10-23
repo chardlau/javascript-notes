@@ -10,7 +10,7 @@ console.log('Object.keys(a1): ', Object.keys(a1));
 
 /*
  * 2. 数组的length属性
- * length的取值范围为0到(2^32-1)
+ * length的取值范围为0到(2**32-1)
  * length为最大键名+1
  * 可以修改length的值来控制数组的长度
  * 数组中没有定义值的元素为空位，值为undefined，可读
