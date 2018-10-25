@@ -25,4 +25,24 @@ console.log('1 / \'2\': ', 1 / '2');
 
 /*
  * 3. 对象的相加
+ * 作为运算子调用对象的valueOf方法，修改valueOf方法就可以定制对象作为运算子的值
+ * 如果参加操作的运算子有一个字符串，则对象也需要转换为字符串类型，将调用toString方法
+ * 这里有一个特例，如果运算子是一个Date对象的实例，那么会优先执行toString方法。
  */
+let obj1 = {};
+obj1.valueOf = function () { return 1; };
+obj1.toString = function () { return 'hello'; };
+console.log('obj1: ', obj1);
+console.log('obj1.valueOf(): ', obj1.valueOf());
+console.log('obj1.valueOf().toString(): ', obj1.valueOf().toString());
+console.log('1 + obj1: ', obj1 + 1);
+console.log('\'a\' + obj1: ', obj1 + 'a');
+let obj2 = new Date();
+obj2.valueOf = function () { return 1; };
+obj2.toString = function () { return 'hello'; };
+console.log('obj2: ', obj2);
+console.log('obj2.valueOf(): ', obj2.valueOf());
+console.log('obj2.valueOf().toString(): ', obj2.valueOf().toString());
+console.log('1 + obj2: ', obj2 + 1);
+console.log('\'a\' + obj2: ', obj2 + 'a');
+
