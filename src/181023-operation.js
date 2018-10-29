@@ -79,3 +79,89 @@ console.log('-{}: ', -{});
 console.log('(2**3)**2: ', (2**3)**2);
 console.log('2**(3**2): ', 2**(3**2));
 console.log('2**3**2: ', 2**3**2);
+
+
+/*
+ * 8. 比较运算符
+ * JavaScript 一共提供了8个比较运算符。
+ */
+/*
+> 大于运算符
+< 小于运算符
+<= 小于或等于运算符
+>= 大于或等于运算符
+== 相等运算符
+=== 严格相等运算符
+!= 不相等运算符
+!== 严格不相等运算符
+*/
+// 分成两类：相等比较和非相等比较
+// 对于非相等比较：先看两个运算子是否是字符串，是则按字典顺序比较（实际上是比较Unicode码点）；否则将两个运算子都转成数值，再比较数值大小。
+
+/*
+ * 9. 字符串的非相等比较
+ */
+console.log('\'cat\' > \'dog\': ', 'cat' > 'dog' );
+console.log('\'cat\' > \'catalog\': ', 'cat' > 'catalog' );
+console.log('\'cat\' > \'Cat\': ', 'cat' > 'Cat' );
+console.log('\'大\' > \'小\': ', '大' > '小' );
+
+/*
+ * 10. 非字符串的非相等比较
+ */
+// 原始类型
+console.log('5 > \'4\': ', 5 > '4');
+console.log('true > false: ', true > false);
+console.log('2 > true: ', 2 > true);
+// 任何值（包括NaN本身）与NaN比较，返回的都是false
+console.log('1 > NaN: ', 1 > NaN);
+console.log('1 <= NaN: ', 1 <= NaN);
+console.log('\'1\' > NaN: ', '1' > NaN);
+console.log('NaN > NaN: ', NaN > NaN);
+console.log('NaN <= NaN: ', NaN <= NaN);
+// 运算子是对象，会转为原始类型的值，再进行比较。
+console.log('[2].valueOf().toString(): ', [2].valueOf().toString());
+console.log('typeof [2].valueOf().toString(): ', typeof [2].valueOf().toString());
+console.log('[2] > 11: ', [2] > 11);
+console.log('[2] > \'11\': ', [2] > '11');
+console.log('{ x: 2 } > { x: 1 }: ', { x: 2 } > { x: 1 });
+console.log('{ x: 2 } >= { x: 1 }: ', { x: 2 } >= { x: 1 });
+
+
+/*
+ * 11. 严格相等运算符(严格不相等运算符在此基础上对结果取反）
+ */
+// 两个值的类型不同，直接返回false
+console.log('1 === \'1\': ', 1 === '1');
+// 同一类型的原始类型的值（数值、字符串、布尔值）比较时，值相同就返回true，值不同就返回false
+// 需要注意的是，NaN与任何值都不相等（包括自身）。另外，正0等于负0
+console.log('1 === 0x1: ', 1 === 0x1);
+console.log('NaN === NaN: ', NaN === NaN);
+console.log('+0 === -0: ', +0 === -0);
+// 复合类型（对象、数组、函数）的数据比较时，而是比较它们是否指向同一个地址。(不等运算比较值）
+console.log('{} === {}: ', {} === {});
+console.log('[] === []: ', [] === []);
+console.log('function () {} === function () {}: ', function () {} === function () {});
+// undefined 和 null与自身严格相等
+console.log('undefined === undefined: ', undefined === undefined);
+console.log('null === null: ', null === null);
+
+
+/*
+ * 12. 相等运算符（不相等运算符在此基础上取反）
+ */
+// 同类型比较与严格相等运算符一样
+// 原始类型：转换成数值再进行比较
+console.log('1 == true: ', 1 == true);
+console.log('\'true\' == true: ', 'true' == true);
+console.log('\'\\n  123  \\t\' == 123: ', '\n  123  \t' == 123);
+// 对象（这里指广义的对象，包括数组和函数）与原始类型的值比较时，对象转换成原始类型的值，再进行比较。
+console.log('[1] == 1: ', [1] == 1);
+console.log('[1] == \'1\': ',  [1] == '1');
+console.log('[1, 2] == \'1,2\': ', [1, 2] == '1,2');
+console.log('[1] == true: ', [1] == true);
+console.log('[2] == true: ', [2] == true);
+// undefined 和 null 与其他值比较都为false，它们相互比较时结果为true
+console.log('false == null: ', false == null);
+console.log('0 == null: ', 0 == null);
+console.log('undefined == null: ', undefined == null);
