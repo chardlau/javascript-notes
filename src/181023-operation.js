@@ -46,3 +46,36 @@ console.log('obj2.valueOf().toString(): ', obj2.valueOf().toString());
 console.log('1 + obj2: ', obj2 + 1);
 console.log('\'a\' + obj2: ', obj2 + 'a');
 
+
+/*
+ * 4. 取余
+ * 运算结果的正负号由第一个运算子的正负号决定
+ */
+console.log('5 % 3: ', 5 % 3);
+console.log('-5 % 3: ', -5 % 3);
+
+
+/*
+ * 5. 数值运算符（+）
+ * 相当于Number函数
+ */
+console.log('+true: ', +true);
+console.log('+[]: ', +[]);
+console.log('+{}: ', +{});
+
+/*
+ * 6. 负数值运算符（-）
+ * 将一个值转为数值，只不过得到的值正负相反
+ */
+console.log('-true: ', -true);
+console.log('-[]: ', -[]);
+console.log('-{}: ', -{});
+
+
+/*
+ * 7. 指数运算符
+ * 指数运算符是右结合，而不是左结合。即多个指数运算符连用时，先进行最右边的计算。
+ */
+console.log('(2**3)**2: ', (2**3)**2);
+console.log('2**(3**2): ', 2**(3**2));
+console.log('2**3**2: ', 2**3**2);
