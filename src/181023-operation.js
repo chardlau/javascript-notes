@@ -165,3 +165,38 @@ console.log('[2] == true: ', [2] == true);
 console.log('false == null: ', false == null);
 console.log('0 == null: ', 0 == null);
 console.log('undefined == null: ', undefined == null);
+
+
+/*
+ * 13. 取反运算（!）
+ * 对6个值取反为true，它们分别为：undefined、null、false、0、NaN、空字符串('')，其他都为false
+ */
+console.log('!undefined: ', !undefined);
+console.log('!null: ', !null);
+console.log('!false: ', !false);
+console.log('!0: ', !0);
+console.log('!NaN: ', !NaN);
+console.log('!\'\': ', !'');
+
+
+/*
+ * 14. 且运算符（&&）（它的返回值不一定是布尔值）
+ * 如果第一个运算子的布尔值为true，则返回第二个运算子的值（注意是值，不是布尔值）；
+ * 如果第一个运算子的布尔值为false，则直接返回第一个运算子的值，且不再对第二个运算子求值
+ */
+console.log('\'t\' && \'\': ', 't' && '');
+console.log('\'t\' && \'f\': ', 't' && 'f');
+console.log('\'\' && \'f\': ', '' && 'f');
+let x = 1;
+console.log('let x = 1; (1 - 1) && ( x += 1): ', (1 - 1) && ( x += 1), ', x: ', x);
+
+/*
+ * 15. 或运算符（||）
+ * 如果第一个运算子的布尔值为true，则返回第一个运算子的值，且不再对第二个运算子求值；
+ * 如果第一个运算子的布尔值为false，则返回第二个运算子的值。
+ */
+console.log('\'t\' || \'\': ', 't' || '');
+console.log('\'t\' || \'f\': ', 't' || 'f');
+console.log('\'\' || \'f\': ', '' || 'f');
+let y = 1;
+console.log('let y = 1; 1 || ( y += 1): ', 1 || ( y += 1), ', y: ', y);
