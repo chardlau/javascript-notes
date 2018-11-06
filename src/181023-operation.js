@@ -200,3 +200,22 @@ console.log('\'t\' || \'f\': ', 't' || 'f');
 console.log('\'\' || \'f\': ', '' || 'f');
 let y = 1;
 console.log('let y = 1; 1 || ( y += 1): ', 1 || ( y += 1), ', y: ', y);
+
+
+/*
+ * 16. 三元条件运算符（ condition ? true_option : false_option ）
+ */
+console.log('\'t\' ? \'hello\' : \'world\': ', 't' ? 'hello' : 'world');
+console.log('0 ? \'hello\' : \'world\': ', 0 ? 'hello' : 'world');
+
+
+/*
+ * 17. 二进制位运算符
+ * | 二进制或运算符
+ * & 二进制与运算符
+ * ~ 二进制否运算符
+ * ^ 二进制异或运算符
+ * << 左移运算符
+ * >> 右移运算符
+ * >>> 带符号位的右移运算符
+ */
