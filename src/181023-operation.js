@@ -219,3 +219,32 @@ console.log('0 ? \'hello\' : \'world\': ', 0 ? 'hello' : 'world');
  * >> 右移运算符
  * >>> 带符号位的右移运算符
  */
+
+function toInt32(value) {
+    return value | 0;
+}
+
+
+/*
+ * 18. 其他运算符
+ */
+// void，执行一个表达式，但不返回任何值
+// 这个运算符的主要用途是浏览器的书签工具（bookmarklet），以及在超级链接中插入代码防止网页跳转。
+// <script> function f() {console.log('Hello World');}</script>
+// <a href="javascript: void(f())">文字</a>
+// 等价于下面代码：
+// <script> function f() {console.log('Hello World');}</script>
+// <a href="http://example.com" onclick="f(); return false;">点击</a>
+console.log('void 0: ', void 0);
+
+// 逗号运算符返回后一个表达式的值
+let d = 0;
+let j = (d++, 10);
+console.log('d: ', d);
+console.log('j: ', j);
+
+
+/*
+ * 结合性
+ */
+// 大部分都是左结合，除了=（赋值运算）、?:（条件运算）、**（指数运算）
